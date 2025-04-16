@@ -10,8 +10,26 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-vector-icons/common": "^11.0.0",
+    "@react-native-vector-icons/feather": "^4.29.2",
+    "@react-native-vector-icons/fontisto": "^3.0.4",
+    "@react-navigation/bottom-tabs": "7.3.10",
+    "@react-navigation/native": "7.1.6",
+    "@react-navigation/native-stack": "7.3.10",
+    "@reduxjs/toolkit": "^2.6.1",
+    "hex-to-rgba": "^2.0.1",
     "react": "19.0.0",
-    "react-native": "0.79.1"
+    "react-native": "0.79.1",
+    "react-native-gesture-handler": "2.25.0",
+    "react-native-notifier": "1.10.0",
+    "react-native-permissions": "5.3.0",
+    "react-native-reanimated": "3.17.4",
+    "react-native-safe-area-context": "5.4.0",
+    "react-native-screens": "~4.10.0",
+    "react-native-svg": "15.11.2",
+    "react-native-svg-transformer": "1.5.0",
+    "react-redux": "9.2.0",
+    "redux": "5.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -26,6 +44,7 @@
     "@react-native/typescript-config": "0.79.1",
     "@types/jest": "^29.5.13",
     "@types/react": "^19.0.0",
+    "@types/react-native-vector-icons": "^6.4.18",
     "@types/react-test-renderer": "^19.0.0",
     "eslint": "^8.19.0",
     "jest": "^29.6.3",
