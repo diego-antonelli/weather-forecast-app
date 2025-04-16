@@ -15,6 +15,7 @@ export interface SimpleForecast {
 }
 
 export type Forecast = {
+  dt_txt: string; //2023-10-01 12:00:00
   coord: {
     lon: number;
     lat: number;

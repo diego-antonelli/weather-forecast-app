@@ -52,6 +52,7 @@ export const Home = () => {
               {Number(selector.current?.main.temp).toFixed(1)} &deg;C
             </Text>
             <Text style={styles.condition}>
+              {selector.current?.weather?.[0]?.main} -{' '}
               {selector.current?.weather?.[0]?.description}
             </Text>
 
