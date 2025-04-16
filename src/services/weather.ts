@@ -14,7 +14,7 @@ export interface SimpleForecast {
   temperature: number;
 }
 
-type Forecast = {
+export type Forecast = {
   coord: {
     lon: number;
     lat: number;
@@ -64,56 +64,66 @@ type Forecast = {
   cod: number;
 };
 
-export async function getWeather({
-  cityName,
-}: {
-  cityName: string;
-}): Promise<SimpleForecast | undefined> {
-  try {
-    console.log('Calling API');
-    const request = await fetch(
-      BASE_URL +
-        `/weather?q=${cityName}&appid=${OPEN_WEATHER_MAP_KEY}&lang=en&units=metric`,
-    );
-    console.log('Called');
-    const forecast: Forecast = await request.json();
-    console.log(forecast);
-    return {
-      prediction: mapPrediction(forecast.weather[0].icon),
-      temperature: forecast.main.temp,
-    };
-  } catch (e) {
-    console.error(e);
-    return undefined;
+export const fetchCurrentWeather = async (city: string) => {
+  const res = await fetch(
+    `${BASE_URL}/weather?q=${city}&appid=${OPEN_WEATHER_MAP_KEY}&units=metric&lang=en`,
+  );
+  if (!res.ok) {
+    throw new Error('Weather not found');
   }
-}
+  return res.json();
+};
 
-function mapPrediction(icon: string) {
+export const fetchForecast = async (city: string) => {
+  const res = await fetch(
+    `${BASE_URL}/forecast?q=${city}&appid=${OPEN_WEATHER_MAP_KEY}&units=metric&lang=en`,
+  );
+  if (!res.ok) {
+    throw new Error('Forecast not found');
+  }
+  const data = await res.json();
+  // every 24 hours
+  return data.list.filter((_: any, i: number) => i % 8 === 0);
+};
+
+export const fetchForecastLatLng = async (city: string) => {
+  const res = await fetch(
+    `${BASE_URL}/forecast?q=${city}&appid=${OPEN_WEATHER_MAP_KEY}&units=metric&lang=en`,
+  );
+  if (!res.ok) {
+    throw new Error('Forecast not found');
+  }
+  const data = await res.json();
+  // every 24 hours
+  return data.list.filter((_: any, i: number) => i % 8 === 0);
+};
+
+export function mapIcon(icon: string) {
   switch (icon) {
     case '01d': //Sunny
     case '01n': //Sunny (night)
-      return 'sunny';
+      return '☀️';
     case '02d': //Few clouds
     case '02n': //Few clouds (night)
-      return 'partially-cloudy';
+      return '⛅';
     case '03d': //Scattered Clouds
     case '03n': //Scattered Clouds (Night)
     case '04d': //Broken clouds
     case '04n': //Broken clouds (Night)
     case '50d': //Mist
     case '50n': //Mist (Night)
-      return 'cloudy';
+      return '☁️';
     case '09d': //Showers
     case '09n': //Showers (Night)
     case '10d': //Rain
     case '10n': //Rain (Night)
     case '11d': //Thunderstorm
     case '11n': //Thunderstorm (Night)
-      return 'rainy';
+      return '🌧';
     case '13d': //Snow
     case '13n': //Snow (Night)
-      return 'snow';
+      return '❄️';
     default:
-      return 'sunny';
+      return '☀️';
   }
 }

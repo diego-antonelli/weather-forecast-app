@@ -5,7 +5,7 @@ import {
   Text as NativeText,
   TextStyle,
 } from 'react-native';
-import {colors, fonts} from './theme';
+import {fonts, useTheme} from './theme';
 
 interface TextProps {
   style?: StyleProp<TextStyle>;
@@ -21,11 +21,16 @@ export function Text({
   ellipsis,
   allowFontScaling = true,
 }: PropsWithChildren<TextProps>) {
+  const theme = useTheme();
   const props = ellipsis ? {numberOfLines: 1} : {};
   return (
     <NativeText
       allowFontScaling={allowFontScaling}
-      style={[variant === 'normal' ? styles.normal : styles.small, style]}
+      style={[
+        variant === 'normal' ? styles.normal : styles.small,
+        {color: theme.text.primaryColor},
+        style,
+      ]}
       ellipsizeMode="tail"
       {...props}>
       {children}
@@ -36,10 +41,8 @@ export function Text({
 const styles = StyleSheet.create({
   normal: {
     ...fonts.mediumBodyRegular,
-    color: colors.grey,
   },
   small: {
     ...fonts.mediumBodySmall,
-    color: colors.grey,
   },
 });

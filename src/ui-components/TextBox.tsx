@@ -9,7 +9,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import {colors, fonts, theme} from './theme.ts';
-import FeatherIcon from 'react-native-vector-icons/Feather';
+import FeatherIcon from '@react-native-vector-icons/feather';
 import {ClickableContainer} from './ClickableContainer.tsx';
 import {forwardRef, useState} from 'react';
 import {Text} from './Text.tsx';
@@ -70,7 +70,6 @@ interface TextBoxProps {
   onFocus?: () => void;
   loading?: boolean;
   disabled?: boolean;
-  insideBottomSheet?: boolean;
   returnKeyType?: 'done' | 'go' | 'next' | 'search' | 'send';
   onSubmitEditing?: () => void;
 }

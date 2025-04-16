@@ -1,4 +1,4 @@
-import {TextStyle} from 'react-native';
+import {TextStyle, useColorScheme} from 'react-native';
 import hexToRgba from 'hex-to-rgba';
 
 export const colors = {
@@ -15,8 +15,27 @@ export const colors = {
 const primaryColor = colors.blue;
 
 export const theme = {
-  backdropColor: hexToRgba(colors.black, '0.4'),
-  backgroundColor: '#FFF',
+  gradient: ['#D6EAF8', '#AED6F1', '#85C1E9'],
+  backgroundColor: '#D6EAF8',
+  secondaryBackgroundColor: '#85C1E9',
+  borderColor: '#85C1E9',
+  buttonBackground: colors.black,
+  alphaButtonBackground: hexToRgba(colors.black, '0.05'),
+  primaryColor: primaryColor,
+  alphaPrimaryColor: hexToRgba(primaryColor, '0.1'),
+  text: {
+    buttonLabel: '#FFFFFF',
+    primaryColor: colors.black,
+    disabledColor: colors.grey,
+  },
+  placeholderColor: 'rgba(0,0,0,0.1)',
+};
+
+export const themeDark = {
+  gradient: ['#001F3F', '#0059b3'],
+  backgroundColor: '#001F3F',
+  secondaryBackgroundColor: '#003366',
+  borderColor: '#003366',
   buttonBackground: colors.black,
   alphaButtonBackground: hexToRgba(colors.black, '0.05'),
   primaryColor: primaryColor,
@@ -24,10 +43,15 @@ export const theme = {
   text: {
     buttonLabel: '#FFFFFF',
     primaryColor: colors.white,
-    alphaPrimaryColor: colors.black,
+    disabledColor: colors.grey,
   },
   placeholderColor: 'rgba(0,0,0,0.1)',
 };
+
+export function useTheme() {
+  const isDarkMode = useColorScheme() === 'dark';
+  return isDarkMode ? themeDark : theme;
+}
 
 export const fonts = {
   //styleName: Medium/Body regular;

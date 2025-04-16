@@ -1,11 +1,13 @@
 import {configureStore} from '@reduxjs/toolkit';
 import searchSlice from './slices/searchSlice.ts';
-import forecastSlice from './slices/forecastSlice.ts';
+import weatherReducer from './slices/weatherSlice';
+import cityReducer from './slices/citySlice';
 
 export const store = configureStore({
   reducer: {
     search: searchSlice,
-    forecasts: forecastSlice,
+    weather: weatherReducer,
+    city: cityReducer,
   },
 });
 
