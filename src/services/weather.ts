@@ -75,6 +75,16 @@ export const fetchCurrentWeather = async (city: string) => {
   return res.json();
 };
 
+export const fetchCurrentWeatherByLatLng = async (lat: number, lng: number) => {
+  const res = await fetch(
+    `${BASE_URL}/weather?lat=${lat}&lon=${lng}&appid=${OPEN_WEATHER_MAP_KEY}&units=metric&lang=en`,
+  );
+  if (!res.ok) {
+    throw new Error('Weather not found');
+  }
+  return res.json();
+};
+
 export const fetchForecast = async (city: string) => {
   const res = await fetch(
     `${BASE_URL}/forecast?q=${city}&appid=${OPEN_WEATHER_MAP_KEY}&units=metric&lang=en`,
@@ -87,9 +97,9 @@ export const fetchForecast = async (city: string) => {
   return data.list.filter((_: any, i: number) => i % 8 === 0);
 };
 
-export const fetchForecastLatLng = async (city: string) => {
+export const fetchForecastByLatLng = async (lat: number, lng: number) => {
   const res = await fetch(
-    `${BASE_URL}/forecast?q=${city}&appid=${OPEN_WEATHER_MAP_KEY}&units=metric&lang=en`,
+    `${BASE_URL}/forecast?lat=${lat}&lon=${lng}&appid=${OPEN_WEATHER_MAP_KEY}&units=metric&lang=en`,
   );
   if (!res.ok) {
     throw new Error('Forecast not found');

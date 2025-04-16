@@ -2,7 +2,7 @@ import {Text} from '../ui-components/Text.tsx';
 import {View, StyleSheet, TouchableOpacity, Animated} from 'react-native';
 import {View as AnimatedView} from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
-import {useEffect} from 'react';
+import {useCallback, useEffect, useMemo} from 'react';
 import {
   useAnimatedStyle,
   useSharedValue,
@@ -12,15 +12,23 @@ import {
 import {useTheme} from '../ui-components/theme.ts';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useAppDispatch, useAppSelector} from '../utils/hooks/redux.ts';
-import {getWeather} from '../stores/slices/weatherSlice.ts';
+import {getWeather, getWeatherByLatLng} from '../stores/slices/weatherSlice.ts';
 import {mapIcon} from '../services/weather.ts';
+import Geolocation from 'react-native-geolocation-service';
+import {ClickableContainer} from '../ui-components/ClickableContainer.tsx';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../types';
+import {Routes} from '../utils/constants.ts';
+import {Spinner} from '../ui-components/Spinner.tsx';
 
 export const Home = () => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const rotation = useSharedValue(0);
   const theme = useTheme();
 
   const dispatch = useAppDispatch();
-  const selector = useAppSelector(state => state.weather);
+  const isLoading = useAppSelector(state => state.weather.loading);
+  const weather = useAppSelector(state => state.weather?.current);
 
   useEffect(() => {
     dispatch(getWeather('Amsterdam'));
@@ -34,41 +42,71 @@ export const Home = () => {
     transform: [{rotate: `${rotation.value}deg`}],
   }));
 
+  const onPressCurrentLocation = useCallback(() => {
+    Geolocation.getCurrentPosition(
+      position => {
+        const {latitude, longitude} = position.coords;
+        dispatch(getWeatherByLatLng({lat: latitude, lng: longitude}));
+        // Use this lat/lon to call weather API
+      },
+      error => {
+        console.error('Location error:', error);
+      },
+      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+    );
+  }, [dispatch]);
+
+  const content = useMemo(
+    () =>
+      isLoading ? (
+        <View style={styles.content}>
+          <Spinner />
+        </View>
+      ) : (
+        <AnimatedView animation="fadeInDown" delay={200} style={styles.content}>
+          <Text style={styles.city}>{weather?.name}</Text>
+          <AnimatedView style={[styles.iconWrapper, animatedStyle]}>
+            <Text style={{fontSize: 90}}>
+              {mapIcon(weather?.weather?.[0]?.icon ?? '')}
+            </Text>
+          </AnimatedView>
+          <Text style={styles.temp}>
+            {Number(weather?.main.temp).toFixed(1)} &deg;C
+          </Text>
+          <Text style={styles.condition}>
+            {weather?.weather?.[0]?.main} - {weather?.weather?.[0]?.description}
+          </Text>
+
+          <View style={styles.details}>
+            <Text style={styles.detail}>
+              Feels like: {Number(weather?.main.feels_like).toFixed(1)} &deg;C
+            </Text>
+            <Text style={styles.detail}>
+              Humidity: {Number(weather?.main.humidity).toFixed(0)}%
+            </Text>
+            <Text style={styles.detail}>
+              Wind: {Number(weather?.wind.speed).toFixed(2)} km/h
+            </Text>
+          </View>
+        </AnimatedView>
+      ),
+    [
+      isLoading,
+      weather?.name,
+      weather?.weather,
+      weather?.main.temp,
+      weather?.main.feels_like,
+      weather?.main.humidity,
+      weather?.wind.speed,
+      animatedStyle,
+    ],
+  );
+
   return (
     <LinearGradient colors={theme.gradient} style={styles.container}>
       <SafeAreaView style={styles.container}>
         <Animated.ScrollView contentContainerStyle={styles.content}>
-          <AnimatedView
-            animation="fadeInDown"
-            delay={200}
-            style={styles.content}>
-            <Text style={styles.city}>{selector.current?.name}</Text>
-            <AnimatedView style={[styles.iconWrapper, animatedStyle]}>
-              <Text style={{fontSize: 90}}>
-                {mapIcon(selector.current?.weather?.[0]?.icon ?? '')}
-              </Text>
-            </AnimatedView>
-            <Text style={styles.temp}>
-              {Number(selector.current?.main.temp).toFixed(1)} &deg;C
-            </Text>
-            <Text style={styles.condition}>
-              {selector.current?.weather?.[0]?.main} -{' '}
-              {selector.current?.weather?.[0]?.description}
-            </Text>
-
-            <View style={styles.details}>
-              <Text style={styles.detail}>
-                Feels like:{' '}
-                {Number(selector.current?.main.feels_like).toFixed(1)} &deg;C
-              </Text>
-              <Text style={styles.detail}>
-                Humidity: {Number(selector.current?.main.humidity).toFixed(0)}%
-              </Text>
-              <Text style={styles.detail}>
-                Wind: {Number(selector.current?.wind.speed).toFixed(2)} km/h
-              </Text>
-            </View>
-          </AnimatedView>
+          {content}
           <AnimatedView
             animation="zoomIn"
             style={[styles.card, {backgroundColor: theme.backgroundColor}]}>
@@ -76,12 +114,15 @@ export const Home = () => {
             <Text style={styles.message}>
               How would you like to set your location?
             </Text>
-            <TouchableOpacity style={styles.button}>
+            <ClickableContainer
+              style={styles.button}
+              onPress={onPressCurrentLocation}>
               <Text style={styles.buttonText}>Use Current Location</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
+            </ClickableContainer>
+            <ClickableContainer
+              onPress={() => navigation.navigate(Routes.Search)}>
               <Text style={styles.secondary}>Enter Manually</Text>
-            </TouchableOpacity>
+            </ClickableContainer>
           </AnimatedView>
         </Animated.ScrollView>
       </SafeAreaView>
