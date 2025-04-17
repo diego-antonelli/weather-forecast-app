@@ -1,5 +1,5 @@
-import {mapForecastsToSimpleForecasts, mapIcon} from '../index';
-import {Forecast} from '../../../services/weather.ts';
+import {mapForecastsToSimpleForecasts, mapIcon} from '../mappers';
+import {Forecast} from '../../services/weather';
 
 jest.mock('date-fns/format', () => ({
   __esModule: true,
