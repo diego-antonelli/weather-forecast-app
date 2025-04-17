@@ -21,11 +21,13 @@ export function ForecastCard({
       animation="fadeInUp"
       delay={index * 150}
       style={[styles.card, {backgroundColor: theme.secondaryBackgroundColor}]}>
-      <Text style={styles.date}>{item.date}</Text>
-      <Text style={styles.condition}>
+      <Text style={styles.date} testID="date">
+        {item.date}
+      </Text>
+      <Text style={styles.condition} testID="condition">
         {mapIcon(item.icon ?? '')} {item.description}
       </Text>
-      <Text style={styles.text}>
+      <Text style={styles.text} testID="temperatures">
         <FeatherIcon name="thermometer" color={theme.text.primaryColor} />
         {formatTemperature(item.minTemperature)}C /{' '}
         {formatTemperature(item.maxTemperature)}C
@@ -48,9 +50,13 @@ export function ForecastCard({
                   flexDirection: 'column',
                   alignItems: 'center',
                 }}>
-                <Text style={styles.text}>{item.time}</Text>
-                <Text style={styles.text}>{mapIcon(item.icon ?? '')}</Text>
-                <Text style={styles.text}>
+                <Text style={styles.text} testID="hourly-time">
+                  {item.time}
+                </Text>
+                <Text style={styles.text} testID="hourly-conditions">
+                  {mapIcon(item.icon ?? '')}
+                </Text>
+                <Text style={styles.text} testID="hourly-temperature">
                   {formatTemperature(item.temperature)}
                 </Text>
               </AnimatedView>

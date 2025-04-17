@@ -5,26 +5,21 @@ import {PropsWithChildren} from 'react';
 interface ClickableContainerProps {
   style?: StyleProp<ViewStyle>;
   onPress?: () => void;
-  onLongPress?: () => void;
   disabled?: boolean;
   rippleColor?: string;
-  pointerEvents?: 'box-none' | 'none' | 'box-only' | 'auto';
 }
 
 export function ClickableContainer({
   children,
   style,
   onPress,
-  onLongPress,
   disabled = false,
   rippleColor,
-  pointerEvents,
 }: PropsWithChildren<ClickableContainerProps>) {
   return (
     <Pressable
       disabled={disabled}
       onPress={onPress}
-      onLongPress={onLongPress}
       style={({pressed}) =>
         onPress !== undefined
           ? [
@@ -40,7 +35,7 @@ export function ClickableContainer({
         color: rippleColor ?? theme.backgroundColor,
         borderless: false,
       }}
-      pointerEvents={pointerEvents}>
+      role="button">
       {children}
     </Pressable>
   );

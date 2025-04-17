@@ -55,23 +55,23 @@ export function WeatherContent() {
           {mapIcon(weather?.weather?.[0]?.icon ?? '')}
         </Text>
       </AnimatedView>
-      <Text style={styles.temp}>{formatTemperature(weather?.main.temp)}C</Text>
+      <Text style={styles.temp}>{formatTemperature(weather?.main?.temp)}C</Text>
       <Text style={styles.condition}>
         {weather?.weather?.[0]?.main} - {weather?.weather?.[0]?.description}
       </Text>
 
       <View style={styles.details}>
-        <Text style={styles.detail}>
+        <Text style={styles.detail} testID="feels-like">
           <FeatherIcon name="thermometer" color={theme.text.primaryColor} />
-          Feels like: {formatTemperature(weather?.main.feels_like)}C
+          Feels like: {formatTemperature(weather?.main?.feels_like)}C
         </Text>
-        <Text style={styles.detail}>
+        <Text style={styles.detail} testID="humidity">
           <FeatherIcon name="droplet" color={theme.text.primaryColor} />
-          Humidity: {formatHumidity(weather?.main.humidity)}
+          Humidity: {formatHumidity(weather?.main?.humidity)}
         </Text>
-        <Text style={styles.detail}>
+        <Text style={styles.detail} testID="wind">
           <FeatherIcon name="wind" color={theme.text.primaryColor} />
-          Wind: {formatWindSpeed(weather?.wind.speed)}
+          Wind: {formatWindSpeed(weather?.wind?.speed)}
         </Text>
       </View>
     </AnimatedView>

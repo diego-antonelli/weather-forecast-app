@@ -12,6 +12,7 @@ interface TextProps {
   variant?: 'normal' | 'small';
   ellipsis?: boolean;
   allowFontScaling?: boolean;
+  testID?: string;
 }
 
 export function Text({
@@ -20,11 +21,13 @@ export function Text({
   variant = 'normal',
   ellipsis,
   allowFontScaling = true,
+  testID,
 }: PropsWithChildren<TextProps>) {
   const theme = useTheme();
   const props = ellipsis ? {numberOfLines: 1} : {};
   return (
     <NativeText
+      testID={testID}
       allowFontScaling={allowFontScaling}
       style={[
         variant === 'normal' ? styles.normal : styles.small,

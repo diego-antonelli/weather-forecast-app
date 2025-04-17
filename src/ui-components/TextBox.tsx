@@ -17,7 +17,6 @@ interface TextBoxProps {
   onChange: (value: string) => void;
   containerStyle?: StyleProp<ViewStyle>;
   inputStyle?: StyleProp<TextStyle>;
-  disabled?: boolean;
   returnKeyType?: 'done' | 'go' | 'next' | 'search' | 'send';
   onSubmitEditing?: () => void;
   onClean?: () => void;
@@ -28,7 +27,6 @@ export const TextBox = ({
   onChange,
   containerStyle,
   inputStyle,
-  disabled,
   returnKeyType,
   onSubmitEditing,
   onClean,
@@ -57,7 +55,6 @@ export const TextBox = ({
             : {},
         ]}
         placeholderTextColor={theme.text.primaryColor}
-        readOnly={disabled}
         returnKeyType={returnKeyType}
         onSubmitEditing={onSubmitEditing}
         blurOnSubmit={
