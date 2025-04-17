@@ -1,7 +1,6 @@
 import {Text} from './Text.tsx';
 import FeatherIcon from '@react-native-vector-icons/feather';
 import {View as AnimatedView} from 'react-native-animatable';
-import {mapIcon} from '../services/weather.ts';
 import {
   formatHumidity,
   formatTemperature,
@@ -17,6 +16,7 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 import {useEffect} from 'react';
+import {mapIcon} from '../utils/mappers';
 
 export function WeatherContent() {
   const rotation = useSharedValue(0);

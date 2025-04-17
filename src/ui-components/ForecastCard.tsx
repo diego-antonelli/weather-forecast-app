@@ -1,4 +1,4 @@
-import {mapIcon, SimpleForecast} from '../services/weather.ts';
+import {SimpleForecast} from '../services/weather.ts';
 import {Text} from './Text.tsx';
 import FeatherIcon from '@react-native-vector-icons/feather';
 import {formatTemperature} from '../utils/formats.ts';
@@ -6,6 +6,7 @@ import {FlatList, StyleSheet} from 'react-native';
 import {View as AnimatedView} from 'react-native-animatable';
 import React from 'react';
 import {useTheme} from './theme.ts';
+import {mapIcon} from '../utils/mappers';
 
 export function ForecastCard({
   item,
