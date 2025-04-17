@@ -4,7 +4,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {useTheme} from '../ui-components/theme';
 import {Text} from '../ui-components/Text';
 import {useAppDispatch, useAppSelector} from '../utils/redux';
-import {getForecast, getForecastByLatLng} from '../stores/slices/weatherSlice';
+import {getForecastByLatLng} from '../stores/slices/weatherSlice';
 import {ForecastCard} from '../ui-components/ForecastCard';
 
 export const Forecast = () => {
@@ -12,11 +12,6 @@ export const Forecast = () => {
   const dispatch = useAppDispatch();
   const forecast = useAppSelector(state => state.weather.forecast);
   const selectedCity = useAppSelector(state => state.search.selectedCity);
-
-  useEffect(() => {
-    dispatch(getForecast('Amsterdam'));
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     if (selectedCity) {

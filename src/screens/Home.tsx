@@ -6,7 +6,7 @@ import {useCallback, useEffect, useMemo} from 'react';
 import {useTheme} from '../ui-components/theme';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useAppDispatch, useAppSelector} from '../utils/redux';
-import {getWeather, getWeatherByLatLng} from '../stores/slices/weatherSlice';
+import {getWeatherByLatLng} from '../stores/slices/weatherSlice';
 import Geolocation from 'react-native-geolocation-service';
 import {ClickableContainer} from '../ui-components/ClickableContainer';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
@@ -30,12 +30,6 @@ export const Home = () => {
   const errorWeather = useAppSelector(state => state.weather.error);
   const errorSearch = useAppSelector(state => state.search.error);
   const selectedCity = useAppSelector(state => state.search.selectedCity);
-
-  useEffect(() => {
-    dispatch(getWeather('Amsterdam'));
-    dispatch(setCurrentLocation(false));
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     if (selectedCity) {

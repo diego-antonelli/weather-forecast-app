@@ -69,15 +69,16 @@ export type SimpleForecast = {
   }>;
 };
 
-export const fetchCurrentWeather = async (city: string) => {
-  const res = await fetch(
-    `${BASE_URL}/weather?q=${city}&appid=${OPEN_WEATHER_MAP_KEY}&units=metric&lang=en`,
-  );
-  if (!res.ok) {
-    throw new Error('Weather not found');
-  }
-  return res.json();
-};
+// TODO: Enable this to search by city name only instead of lat/lng
+// export const fetchCurrentWeather = async (city: string) => {
+//   const res = await fetch(
+//     `${BASE_URL}/weather?q=${city}&appid=${OPEN_WEATHER_MAP_KEY}&units=metric&lang=en`,
+//   );
+//   if (!res.ok) {
+//     throw new Error('Weather not found');
+//   }
+//   return res.json();
+// };
 
 export const fetchCurrentWeatherByLatLng = async (lat: number, lng: number) => {
   const res = await fetch(
@@ -108,18 +109,19 @@ export const getCityFromCoords = async (
   };
 };
 
-export const fetchForecast = async (
-  city: string,
-): Promise<SimpleForecast[]> => {
-  const res = await fetch(
-    `${BASE_URL}/forecast?q=${city}&appid=${OPEN_WEATHER_MAP_KEY}&units=metric&lang=en`,
-  );
-  if (!res.ok) {
-    throw new Error('Forecast not found');
-  }
-  const data = await res.json();
-  return mapForecastsToSimpleForecasts(city, data.list);
-};
+// TODO: Enable this to search by city name only instead of lat/lng
+// export const fetchForecast = async (
+//   city: string,
+// ): Promise<SimpleForecast[]> => {
+//   const res = await fetch(
+//     `${BASE_URL}/forecast?q=${city}&appid=${OPEN_WEATHER_MAP_KEY}&units=metric&lang=en`,
+//   );
+//   if (!res.ok) {
+//     throw new Error('Forecast not found');
+//   }
+//   const data = await res.json();
+//   return mapForecastsToSimpleForecasts(city, data.list);
+// };
 
 export const fetchForecastByLatLng = async (
   city: string,

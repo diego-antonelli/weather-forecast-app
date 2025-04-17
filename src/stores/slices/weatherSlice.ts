@@ -1,19 +1,20 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {
-  fetchCurrentWeather,
+  // fetchCurrentWeather,
   fetchCurrentWeatherByLatLng,
-  fetchForecast,
+  // fetchForecast,
   fetchForecastByLatLng,
   Forecast,
   SimpleForecast,
 } from '../../services/weather';
 
-export const getWeather = createAsyncThunk(
-  'weather/getWeather',
-  async (city: string) => {
-    return await fetchCurrentWeather(city);
-  },
-);
+// TODO: Enable this to search by city name only instead of lat/lng
+// export const getWeather = createAsyncThunk(
+//   'weather/getWeather',
+//   async (city: string) => {
+//     return await fetchCurrentWeather(city);
+//   },
+// );
 
 export const getWeatherByLatLng = createAsyncThunk(
   'weather/getWeatherByLatLng',
@@ -22,12 +23,13 @@ export const getWeatherByLatLng = createAsyncThunk(
   },
 );
 
-export const getForecast = createAsyncThunk(
-  'weather/getForecast',
-  async (city: string) => {
-    return await fetchForecast(city);
-  },
-);
+// TODO: Enable this to search by city name only instead of lat/lng
+// export const getForecast = createAsyncThunk(
+//   'weather/getForecast',
+//   async (city: string) => {
+//     return await fetchForecast(city);
+//   },
+// );
 
 export const getForecastByLatLng = createAsyncThunk(
   'weather/getForecastByLatLng',
@@ -56,17 +58,18 @@ const weatherSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(getWeather.pending, state => {
-        state.loadingWeather = true;
-      })
-      .addCase(getWeather.fulfilled, (state, action) => {
-        state.current = action.payload;
-        state.loadingWeather = false;
-      })
-      .addCase(getWeather.rejected, (state, action) => {
-        state.loadingWeather = false;
-        state.error = action.error.message;
-      })
+      // TODO: Enable this to search by city name only instead of lat/lng
+      // .addCase(getWeather.pending, state => {
+      //   state.loadingWeather = true;
+      // })
+      // .addCase(getWeather.fulfilled, (state, action) => {
+      //   state.current = action.payload;
+      //   state.loadingWeather = false;
+      // })
+      // .addCase(getWeather.rejected, (state, action) => {
+      //   state.loadingWeather = false;
+      //   state.error = action.error.message;
+      // })
       .addCase(getWeatherByLatLng.pending, state => {
         state.loadingWeather = true;
       })
@@ -78,17 +81,18 @@ const weatherSlice = createSlice({
         state.loadingWeather = false;
         state.error = action.error.message;
       })
-      .addCase(getForecast.pending, state => {
-        state.loadingForecast = true;
-      })
-      .addCase(getForecast.fulfilled, (state, action) => {
-        state.forecast = action.payload;
-        state.loadingForecast = false;
-      })
-      .addCase(getForecast.rejected, (state, action) => {
-        state.loadingForecast = false;
-        state.error = action.error.message;
-      })
+      // TODO: Enable this to search by city name only instead of lat/lng
+      // .addCase(getForecast.pending, state => {
+      //   state.loadingForecast = true;
+      // })
+      // .addCase(getForecast.fulfilled, (state, action) => {
+      //   state.forecast = action.payload;
+      //   state.loadingForecast = false;
+      // })
+      // .addCase(getForecast.rejected, (state, action) => {
+      //   state.loadingForecast = false;
+      //   state.error = action.error.message;
+      // })
       .addCase(getForecastByLatLng.pending, state => {
         state.loadingForecast = true;
       })
