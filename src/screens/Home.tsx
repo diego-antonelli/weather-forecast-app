@@ -1,25 +1,25 @@
-import {Text} from '../ui-components/Text.tsx';
+import {Text} from '../ui-components/Text';
 import {View, StyleSheet, Animated} from 'react-native';
 import {View as AnimatedView} from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import {useCallback, useEffect, useMemo} from 'react';
-import {useTheme} from '../ui-components/theme.ts';
+import {useTheme} from '../ui-components/theme';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useAppDispatch, useAppSelector} from '../utils/hooks/redux.ts';
-import {getWeather, getWeatherByLatLng} from '../stores/slices/weatherSlice.ts';
+import {useAppDispatch, useAppSelector} from '../utils/redux';
+import {getWeather, getWeatherByLatLng} from '../stores/slices/weatherSlice';
 import Geolocation from 'react-native-geolocation-service';
-import {ClickableContainer} from '../ui-components/ClickableContainer.tsx';
+import {ClickableContainer} from '../ui-components/ClickableContainer';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../types';
-import {Routes} from '../utils/constants.ts';
-import {Spinner} from '../ui-components/Spinner.tsx';
-import {showMessage} from '../utils/toast.ts';
+import {Routes} from '../utils/constants';
+import {Spinner} from '../ui-components/Spinner';
+import {showMessage} from '../utils/toast';
 import {
   findCityByLatLng,
   setCurrentLocation,
-} from '../stores/slices/searchSlice.ts';
-import {WeatherContent} from '../ui-components/WeatherContent.tsx';
-import {Error} from '../ui-components/Error.tsx';
+} from '../stores/slices/searchSlice';
+import {WeatherContent} from '../ui-components/WeatherContent';
+import {Error} from '../ui-components/Error';
 
 export const Home = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();

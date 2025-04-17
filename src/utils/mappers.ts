@@ -1,4 +1,4 @@
-import {Forecast, SimpleForecast} from '../../services/weather.ts';
+import {Forecast, SimpleForecast} from '../../services/weather';
 import {format} from 'date-fns/format';
 
 export function mapForecastsToSimpleForecasts(

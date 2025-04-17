@@ -1,5 +1,5 @@
 import {Platform, Pressable, StyleProp, ViewStyle} from 'react-native';
-import {theme} from './theme.ts';
+import {theme} from './theme';
 import {PropsWithChildren} from 'react';
 
 interface ClickableContainerProps {
@@ -37,7 +37,7 @@ export function ClickableContainer({
           : [style, disabled ? {opacity: 0.5} : {}]
       }
       android_ripple={{
-        color: rippleColor ?? theme.alphaButtonBackground,
+        color: rippleColor ?? theme.backgroundColor,
         borderless: false,
       }}
       pointerEvents={pointerEvents}>

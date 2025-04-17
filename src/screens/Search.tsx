@@ -1,31 +1,23 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {
-  FlatList,
-  TouchableOpacity,
-  StyleSheet,
-  RefreshControl,
-} from 'react-native';
+import {FlatList, StyleSheet} from 'react-native';
 import {View as AnimatedView} from 'react-native-animatable';
-import {TextBox} from '../ui-components/TextBox.tsx';
+import {TextBox} from '../ui-components/TextBox';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useTheme} from '../ui-components/theme.ts';
-import {Text} from '../ui-components/Text.tsx';
-import {useAppDispatch, useAppSelector} from '../utils/hooks/redux.ts';
-import {
-  clearSuggestions,
-  getCitySuggestions,
-} from '../stores/slices/citySlice.ts';
+import {useTheme} from '../ui-components/theme';
+import {Text} from '../ui-components/Text';
+import {useAppDispatch, useAppSelector} from '../utils/redux';
+import {clearSuggestions, getCitySuggestions} from '../stores/slices/citySlice';
 import debounce from 'lodash.debounce';
-import {ClickableContainer} from '../ui-components/ClickableContainer.tsx';
+import {ClickableContainer} from '../ui-components/ClickableContainer';
 import {
   addSearch,
   selectCity,
   setCurrentLocation,
-} from '../stores/slices/searchSlice.ts';
+} from '../stores/slices/searchSlice';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../types';
-import {Routes} from '../utils/constants.ts';
-import {Spinner} from '../ui-components/Spinner.tsx';
+import {Routes} from '../utils/constants';
+import {Spinner} from '../ui-components/Spinner';
 
 const SearchScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();

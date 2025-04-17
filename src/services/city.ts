@@ -1,4 +1,4 @@
-import {API_NINJAS_KEY} from '../utils/constants.ts';
+import {API_NINJAS_KEY} from '../utils/constants';
 
 export type City = {
   name: string;

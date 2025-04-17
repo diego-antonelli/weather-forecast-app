@@ -1,5 +1,5 @@
 import {Notifier} from 'react-native-notifier';
-import {fonts} from '../ui-components/theme.ts';
+import {fonts} from '../ui-components/theme';
 
 export function showMessage(message: string) {
   Notifier.showNotification({
@@ -9,7 +9,8 @@ export function showMessage(message: string) {
     hideOnPress: false,
     componentProps: {
       descriptionStyle: {
-        ...fonts.regularBodySmall,
+        fontSize: 13.5,
+        fontWeight: '400',
         color: '#000',
         textAlign: 'auto',
       },

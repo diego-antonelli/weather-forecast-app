@@ -1,5 +1,5 @@
-import {OPEN_WEATHER_MAP_KEY} from '../utils/constants.ts';
-import {City} from './city.ts';
+import {OPEN_WEATHER_MAP_KEY} from '../utils/constants';
+import {City} from './city';
 import {mapForecastsToSimpleForecasts} from '../utils/mappers';
 
 const BASE_URL = 'https://api.openweathermap.org/data/2.5';

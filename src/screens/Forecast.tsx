@@ -1,15 +1,11 @@
 import React, {useEffect} from 'react';
 import {StyleSheet, FlatList} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useTheme} from '../ui-components/theme.ts';
-import {Text} from '../ui-components/Text.tsx';
-import {useAppDispatch, useAppSelector} from '../utils/hooks/redux.ts';
-import {
-  getForecast,
-  getForecastByLatLng,
-} from '../stores/slices/weatherSlice.ts';
-import {setCurrentLocation} from '../stores/slices/searchSlice.ts';
-import {ForecastCard} from '../ui-components/ForecastCard.tsx';
+import {useTheme} from '../ui-components/theme';
+import {Text} from '../ui-components/Text';
+import {useAppDispatch, useAppSelector} from '../utils/redux';
+import {getForecast, getForecastByLatLng} from '../stores/slices/weatherSlice';
+import {ForecastCard} from '../ui-components/ForecastCard';
 
 export const Forecast = () => {
   const theme = useTheme();
@@ -31,7 +27,6 @@ export const Forecast = () => {
           lng: selectedCity.longitude,
         }),
       );
-      // dispatch(setCurrentLocation(false));
     }
   }, [dispatch, selectedCity]);
 

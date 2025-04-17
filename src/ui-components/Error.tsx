@@ -1,6 +1,6 @@
 import {StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-animatable';
-import {useTheme} from './theme.ts';
+import {useTheme} from './theme';
 
 export function Error({error}: {error: string}) {
   const theme = useTheme();

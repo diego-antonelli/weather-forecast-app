@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {Platform} from 'react-native';
 
 import {check, PERMISSIONS, request} from 'react-native-permissions';
-import {showMessage} from './src/utils/toast.ts';
+import {showMessage} from './src/utils/toast';
 import {AppNavigator} from './src/navigation';
 
 function App(): React.JSX.Element {

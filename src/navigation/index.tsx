@@ -1,18 +1,18 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {fonts, useTheme} from '../ui-components/theme.ts';
-import {ClickableContainer} from '../ui-components/ClickableContainer.tsx';
-import {Routes} from '../utils/constants.ts';
-import {Home} from '../screens/Home.tsx';
-import {Text} from '../ui-components/Text.tsx';
+import {useTheme} from '../ui-components/theme';
+import {ClickableContainer} from '../ui-components/ClickableContainer';
+import {Routes} from '../utils/constants';
+import {Home} from '../screens/Home';
+import {Text} from '../ui-components/Text';
 import React, {ReactNode, useCallback} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {StyleSheet} from 'react-native';
 import Icon from '@react-native-vector-icons/fontisto';
 import FeatherIcon from '@react-native-vector-icons/feather';
-import {SplashScreen} from '../screens/SplashScreen.tsx';
-import {Forecast} from '../screens/Forecast.tsx';
-import SearchScreen from '../screens/Search.tsx';
+import {SplashScreen} from '../screens/SplashScreen';
+import {Forecast} from '../screens/Forecast';
+import SearchScreen from '../screens/Search';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -22,7 +22,10 @@ const getOptions = (props: any, theme: any) => {
     headerBackTitleVisible: false,
     headerBackVisible: false,
     headerShadowVisible: false,
-    headerTitleStyle: fonts.mediumTitle as any,
+    headerTitleStyle: {
+      fontSize: 20,
+      fontWeight: '500',
+    } as any,
     headerLeft: ({canGoBack}: any) =>
       canGoBack && (
         <ClickableContainer onPress={props.navigation.goBack}>
@@ -111,7 +114,10 @@ function TabStack() {
       screenOptions={tabParams => ({
         headerShown: false,
         headerShadowVisible: false,
-        headerTitleStyle: fonts.mediumTitle as any,
+        headerTitleStyle: {
+          fontSize: 20,
+          fontWeight: '500',
+        } as any,
         tabBarIcon: renderTabIcon(tabParams),
         tabBarLabel: renderTabLabel,
         tabBarShowLabel: true,
@@ -175,8 +181,8 @@ const styles = StyleSheet.create({
   iconWrapper: {alignItems: 'center'},
   label: {fontSize: 12, color: '#fff', marginTop: 4},
   tabLabel: {
-    ...fonts.mediumBodySmall,
     fontSize: 12,
+    fontWeight: '400',
   },
   focusedTabLabel: {fontWeight: '600'},
 });

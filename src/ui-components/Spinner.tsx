@@ -1,5 +1,5 @@
 import {ActivityIndicator, StyleProp, ViewStyle} from 'react-native';
-import {useTheme} from './theme.ts';
+import {useTheme} from './theme';
 
 export function Spinner({
   style,

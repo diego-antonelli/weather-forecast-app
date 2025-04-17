@@ -1,4 +1,4 @@
-import {TextStyle, useColorScheme} from 'react-native';
+import {useColorScheme} from 'react-native';
 
 export const theme = {
   gradient: ['#D6EAF8', '#AED6F1', '#85C1E9'],
@@ -36,46 +36,3 @@ export function useTheme() {
   const isDarkMode = useColorScheme() === 'dark';
   return isDarkMode ? themeDark : theme;
 }
-
-export const fonts = {
-  //styleName: Medium/Body regular;
-  mediumBodyRegular: {
-    fontFamily: 'EuclidCircularA-Medium',
-    fontSize: 15.5,
-    fontWeight: '400',
-  } as TextStyle,
-  //styleName: Regular/Body regular;
-  regularBodyRegular: {
-    fontFamily: 'EuclidCircularA-Regular',
-    fontSize: 15.5,
-    fontWeight: '400',
-  } as TextStyle,
-  //styleName: Medium/Body Small;
-  mediumBodySmall: {
-    fontFamily: 'EuclidCircularA-Regular',
-    fontSize: 13.5,
-    fontWeight: '400',
-  } as TextStyle,
-  //styleName: Regular/Body Small;
-  regularBodySmall: {
-    fontFamily: 'EuclidCircularA-Regular',
-    fontSize: 13.5,
-    fontWeight: '400',
-  } as TextStyle,
-  mediumTitle: {
-    fontFamily: 'EuclidCircularA-Medium',
-    fontSize: 20,
-    fontWeight: '500',
-  } as TextStyle,
-  mediumBodyBig: {
-    fontFamily: 'EuclidCircularA-Medium',
-    fontSize: 17,
-    fontWeight: '500',
-  } as TextStyle,
-  links: {
-    fontFamily: 'EuclidCircularA-Regular',
-    fontSize: 14,
-    fontWeight: '400',
-    textDecorationLine: 'underline',
-  } as TextStyle,
-};

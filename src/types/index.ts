@@ -1,4 +1,4 @@
-import {Routes} from '../utils/constants.ts';
+import {Routes} from '../utils/constants';
 
 export type RootStackParamList = {
   [Routes.Home]: undefined;

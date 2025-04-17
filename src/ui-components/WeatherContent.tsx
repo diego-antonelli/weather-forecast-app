@@ -1,14 +1,14 @@
-import {Text} from './Text.tsx';
+import {Text} from './Text';
 import FeatherIcon from '@react-native-vector-icons/feather';
 import {View as AnimatedView} from 'react-native-animatable';
 import {
   formatHumidity,
   formatTemperature,
   formatWindSpeed,
-} from '../utils/formats.ts';
+} from '../utils/formats';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from './theme.ts';
-import {useAppSelector} from '../utils/hooks/redux.ts';
+import {useTheme} from './theme';
+import {useAppSelector} from '../utils/redux';
 import {
   useAnimatedStyle,
   useSharedValue,

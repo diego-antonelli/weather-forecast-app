@@ -2,10 +2,10 @@ import React, {useEffect} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import LottieView from 'lottie-react-native';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {Routes} from '../utils/constants.ts';
+import {Routes} from '../utils/constants';
 import {RootStackParamList} from '../types';
 import LinearGradient from 'react-native-linear-gradient';
-import {useTheme} from '../ui-components/theme.ts';
+import {useTheme} from '../ui-components/theme';
 
 export const SplashScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();

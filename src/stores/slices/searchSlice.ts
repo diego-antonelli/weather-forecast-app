@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {City} from '../../services/city.ts';
-import {getCityFromCoords} from '../../services/weather.ts';
+import {City} from '../../services/city';
+import {getCityFromCoords} from '../../services/weather';
 
 export const findCityByLatLng = createAsyncThunk(
   'search/findCityByLatLng',

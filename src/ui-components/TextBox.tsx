@@ -7,8 +7,8 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {fonts, useTheme} from './theme.ts';
-import {ClickableContainer} from './ClickableContainer.tsx';
+import {useTheme} from './theme';
+import {ClickableContainer} from './ClickableContainer';
 import FeatherIcon from '@react-native-vector-icons/feather';
 
 interface TextBoxProps {
@@ -85,7 +85,8 @@ const styles = StyleSheet.create({
     height: 48,
   },
   textBox: {
-    ...fonts.mediumBodyRegular,
+    fontSize: 15.5,
+    fontWeight: '400',
     flex: 1,
   },
 });

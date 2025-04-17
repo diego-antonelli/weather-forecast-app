@@ -5,7 +5,7 @@ import {
   Text as NativeText,
   TextStyle,
 } from 'react-native';
-import {fonts, useTheme} from './theme';
+import {useTheme} from './theme';
 
 interface TextProps {
   style?: StyleProp<TextStyle>;
@@ -40,9 +40,11 @@ export function Text({
 
 const styles = StyleSheet.create({
   normal: {
-    ...fonts.mediumBodyRegular,
+    fontSize: 15.5,
+    fontWeight: '400',
   },
   small: {
-    ...fonts.mediumBodySmall,
+    fontSize: 13.5,
+    fontWeight: '400',
   },
 });
