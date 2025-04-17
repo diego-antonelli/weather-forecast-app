@@ -24,6 +24,7 @@ export const theme = {
   primaryColor: primaryColor,
   alphaPrimaryColor: hexToRgba(primaryColor, '0.1'),
   text: {
+    error: '#AE0001',
     buttonLabel: '#FFFFFF',
     primaryColor: colors.black,
     disabledColor: colors.grey,
@@ -41,6 +42,7 @@ export const themeDark = {
   primaryColor: primaryColor,
   alphaPrimaryColor: hexToRgba(primaryColor, '0.1'),
   text: {
+    error: '#ff6f69',
     buttonLabel: '#FFFFFF',
     primaryColor: colors.white,
     disabledColor: colors.grey,

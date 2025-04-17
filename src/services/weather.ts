@@ -1,18 +1,7 @@
 import {OPEN_WEATHER_MAP_KEY} from '../utils/constants.ts';
+import {format} from 'date-fns/format';
 
 const BASE_URL = 'https://api.openweathermap.org/data/2.5';
-
-export type Prediction =
-  | 'sunny'
-  | 'rainy'
-  | 'cloudy'
-  | 'partially-cloudy'
-  | 'snow';
-
-export interface SimpleForecast {
-  prediction: Prediction;
-  temperature: number;
-}
 
 export type Forecast = {
   dt_txt: string; //2023-10-01 12:00:00
@@ -65,6 +54,20 @@ export type Forecast = {
   cod: number;
 };
 
+export type SimpleForecast = {
+  city: string;
+  date: string; //2023-10-01
+  minTemperature: number; //15
+  maxTemperature: number; //15
+  icon: string; //10d
+  description: string; //Light rain
+  byTime: Array<{
+    time: string;
+    temperature: number;
+    icon: string;
+  }>;
+};
+
 export const fetchCurrentWeather = async (city: string) => {
   const res = await fetch(
     `${BASE_URL}/weather?q=${city}&appid=${OPEN_WEATHER_MAP_KEY}&units=metric&lang=en`,
@@ -85,7 +88,9 @@ export const fetchCurrentWeatherByLatLng = async (lat: number, lng: number) => {
   return res.json();
 };
 
-export const fetchForecast = async (city: string) => {
+export const fetchForecast = async (
+  city: string,
+): Promise<SimpleForecast[]> => {
   const res = await fetch(
     `${BASE_URL}/forecast?q=${city}&appid=${OPEN_WEATHER_MAP_KEY}&units=metric&lang=en`,
   );
@@ -93,8 +98,42 @@ export const fetchForecast = async (city: string) => {
     throw new Error('Forecast not found');
   }
   const data = await res.json();
-  // every 24 hours
-  return data.list.filter((_: any, i: number) => i % 8 === 0);
+  const forecastMap = new Map<string, SimpleForecast>();
+  data.list.forEach((forecast: Forecast) => {
+    const date = format(new Date(forecast.dt_txt), 'dd/MM - EE');
+    const existingForecast = forecastMap.get(date);
+    if (existingForecast) {
+      if (existingForecast.minTemperature > forecast.main.temp_min) {
+        existingForecast.minTemperature = forecast.main.temp_min;
+      }
+      if (existingForecast.maxTemperature < forecast.main.temp_max) {
+        existingForecast.maxTemperature = forecast.main.temp_max;
+      }
+      existingForecast.byTime.push({
+        time: format(new Date(forecast.dt_txt), 'HH:mm'),
+        icon: forecast.weather[0].icon,
+        temperature: forecast.main.temp,
+      });
+    } else {
+      forecastMap.set(date, {
+        city,
+        date: date,
+        minTemperature: forecast.main.temp_min,
+        maxTemperature: forecast.main.temp_max,
+        icon: forecast.weather[0].icon,
+        description: forecast.weather[0].main,
+        byTime: [
+          {
+            time: format(new Date(forecast.dt_txt), 'HH:mm'),
+            icon: forecast.weather[0].icon,
+            temperature: forecast.main.temp,
+          },
+        ],
+      });
+    }
+  });
+  console.log(data.list, forecastMap.values());
+  return Array.from(forecastMap.values());
 };
 
 export const fetchForecastByLatLng = async (lat: number, lng: number) => {
@@ -106,7 +145,7 @@ export const fetchForecastByLatLng = async (lat: number, lng: number) => {
   }
   const data = await res.json();
   // every 24 hours
-  return data.list.filter((_: any, i: number) => i % 8 === 0);
+  return data.list; //.filter((_: any, i: number) => i % 8 === 0);
 };
 
 export function mapIcon(icon: string) {

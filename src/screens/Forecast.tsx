@@ -7,32 +7,23 @@ import {Text} from '../ui-components/Text.tsx';
 import {useAppDispatch, useAppSelector} from '../utils/hooks/redux.ts';
 import {getForecast} from '../stores/slices/weatherSlice.ts';
 import {mapIcon} from '../services/weather.ts';
-import {format} from 'date-fns/format';
-
-const forecast = [
-  {day: 'Tue', icon: '☀️', high: 73, low: 54, condition: 'Sunny'},
-  {day: 'Wed', icon: '⛅', high: 70, low: 52, condition: 'Partly Cloudy'},
-  {day: 'Thu', icon: '☁️', high: 65, low: 50, condition: 'Cloudy'},
-  {day: 'Fri', icon: '🌬️', high: 68, low: 48, condition: 'Windy'},
-  {day: 'Sat', icon: '🌧️', high: 60, low: 47, condition: 'Rain'},
-];
+import FeatherIcon from '@react-native-vector-icons/feather';
 
 export const Forecast = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
-  const selector = useAppSelector(state => state.weather);
+  const forecast = useAppSelector(state => state.weather.forecast);
 
   useEffect(() => {
     dispatch(getForecast('Amsterdam'));
   }, [dispatch]);
 
-  console.log(selector);
-
   return (
     <SafeAreaView
       style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
+      <Text style={styles.city}>{forecast?.[0]?.city ?? '-'}</Text>
       <FlatList
-        data={selector.forecast}
+        data={forecast}
         renderItem={({item, index}) => (
           <AnimatedView
             animation="fadeInUp"
@@ -41,20 +32,44 @@ export const Forecast = () => {
               styles.card,
               {backgroundColor: theme.secondaryBackgroundColor},
             ]}>
-            <Text style={styles.date}>
-              {format(new Date(item.dt_txt), 'dd/MM - EE')}
-            </Text>
+            <Text style={styles.date}>{item.date}</Text>
             <Text style={styles.condition}>
-              {mapIcon(item?.weather?.[0]?.icon ?? '')}{' '}
-              {item?.weather?.[0]?.main}
+              {mapIcon(item.icon ?? '')} {item.description}
             </Text>
             <Text style={styles.temp}>
-              {Number(item.main.temp_min).toFixed(1)}° /{' '}
-              {Number(item.main.temp_max).toFixed(1)}°
+              <FeatherIcon name="thermometer" color={theme.text.primaryColor} />
+              {Number(item.minTemperature).toFixed(1)}&deg;C /{' '}
+              {Number(item.maxTemperature).toFixed(1)}&deg;C
             </Text>
+            <Text style={styles.byHour}>Hourly forecast</Text>
+            <FlatList
+              horizontal
+              contentContainerStyle={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'space-evenly',
+              }}
+              data={item.byTime}
+              keyExtractor={item => item.time}
+              renderItem={({item, index}) => (
+                <AnimatedView
+                  animation="fadeInUp"
+                  delay={index * 150}
+                  style={{
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={styles.temp}>{item.time}</Text>
+                  <Text style={styles.temp}>{mapIcon(item.icon ?? '')}</Text>
+                  <Text style={styles.temp}>
+                    {Number(item.temperature).toFixed(1)}&deg;
+                  </Text>
+                </AnimatedView>
+              )}
+            />
           </AnimatedView>
         )}
-        keyExtractor={item => item.dt_txt}
+        keyExtractor={item => item.date}
       />
     </SafeAreaView>
   );
@@ -62,6 +77,7 @@ export const Forecast = () => {
 
 const styles = StyleSheet.create({
   container: {flex: 1, padding: 20},
+  city: {fontSize: 26, marginBottom: 8},
   card: {
     borderRadius: 10,
     padding: 15,
@@ -70,4 +86,5 @@ const styles = StyleSheet.create({
   date: {fontWeight: 'bold', fontSize: 16},
   condition: {fontSize: 16, marginTop: 4},
   temp: {fontSize: 14, marginTop: 2},
+  byHour: {fontSize: 12, marginVertical: 8},
 });

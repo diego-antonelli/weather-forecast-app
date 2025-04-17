@@ -28,6 +28,7 @@ export const Home = () => {
 
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(state => state.weather.loading);
+  const error = useAppSelector(state => state.weather.error);
   const weather = useAppSelector(state => state.weather?.current);
 
   useEffect(() => {
@@ -58,7 +59,13 @@ export const Home = () => {
 
   const content = useMemo(
     () =>
-      isLoading ? (
+      error ? (
+        <View style={styles.content}>
+          <Text style={{color: theme.text.error}}>
+            An error occurred: {error}
+          </Text>
+        </View>
+      ) : isLoading ? (
         <View style={styles.content}>
           <Spinner />
         </View>

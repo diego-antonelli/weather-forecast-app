@@ -5,6 +5,7 @@ import {
   fetchForecast,
   fetchForecastByLatLng,
   Forecast,
+  SimpleForecast,
 } from '../../services/weather';
 
 export const getWeather = createAsyncThunk(
@@ -37,7 +38,7 @@ export const getForecastByLatLng = createAsyncThunk(
 
 interface State {
   current?: Forecast;
-  forecast: Forecast[];
+  forecast: SimpleForecast[];
   loading: boolean;
   error?: string;
 }

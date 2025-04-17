@@ -1,16 +1,24 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, TouchableOpacity, StyleSheet} from 'react-native';
 import {View as AnimatedView} from 'react-native-animatable';
 import {TextBox} from '../ui-components/TextBox.tsx';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useTheme} from '../ui-components/theme.ts';
 import {Text} from '../ui-components/Text.tsx';
-
-const cities = ['San Francisco', 'San Antonio', 'San Diego'];
+import {useAppDispatch, useAppSelector} from '../utils/hooks/redux.ts';
+import {addSearch} from '../stores/slices/searchSlice.ts';
 
 const SearchScreen = () => {
   const [query, setQuery] = useState('');
   const theme = useTheme();
+  const dispatch = useAppDispatch();
+  const searches = useAppSelector(state => state.search.searches);
+
+  useEffect(() => {
+    dispatch(addSearch('San Francisco'));
+    dispatch(addSearch('Amsterdam'));
+    dispatch(addSearch('London'));
+  }, [dispatch]);
 
   return (
     <SafeAreaView
@@ -22,8 +30,8 @@ const SearchScreen = () => {
         onChange={setQuery}
       />
       <FlatList
-        data={cities.filter(city =>
-          city.toLowerCase().includes(query.toLowerCase()),
+        data={searches.filter(search =>
+          search.toLowerCase().includes(query.toLowerCase()),
         )}
         renderItem={({item}) => (
           <AnimatedView animation="fadeInUp">
