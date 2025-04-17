@@ -12,7 +12,7 @@ export function Spinner({
   return (
     <ActivityIndicator
       size="small"
-      color={color ?? theme.primaryColor}
+      color={color ?? theme.buttonBackground}
       style={style}
     />
   );

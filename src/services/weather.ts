@@ -1,5 +1,6 @@
 import {OPEN_WEATHER_MAP_KEY} from '../utils/constants.ts';
 import {format} from 'date-fns/format';
+import {City} from './city.ts';
 
 const BASE_URL = 'https://api.openweathermap.org/data/2.5';
 
@@ -88,6 +89,25 @@ export const fetchCurrentWeatherByLatLng = async (lat: number, lng: number) => {
   return res.json();
 };
 
+export const getCityFromCoords = async (
+  lat: number,
+  lon: number,
+): Promise<City> => {
+  const res = await fetch(
+    `${BASE_URL}/weather?lat=${lat}&lon=${lon}&appid=${OPEN_WEATHER_MAP_KEY}`,
+  );
+  const data = await res.json();
+  return {
+    name: data.name,
+    latitude: lat,
+    longitude: lon,
+    country: data.sys.country,
+    population: 0, // Population not available in OpenWeatherMap
+    region: '', // Region not available in OpenWeatherMap
+    is_capital: false, // Capital status not available in OpenWeatherMap
+  };
+};
+
 export const fetchForecast = async (
   city: string,
 ): Promise<SimpleForecast[]> => {
@@ -132,11 +152,14 @@ export const fetchForecast = async (
       });
     }
   });
-  console.log(data.list, forecastMap.values());
   return Array.from(forecastMap.values());
 };
 
-export const fetchForecastByLatLng = async (lat: number, lng: number) => {
+export const fetchForecastByLatLng = async (
+  city: string,
+  lat: number,
+  lng: number,
+) => {
   const res = await fetch(
     `${BASE_URL}/forecast?lat=${lat}&lon=${lng}&appid=${OPEN_WEATHER_MAP_KEY}&units=metric&lang=en`,
   );
@@ -144,8 +167,41 @@ export const fetchForecastByLatLng = async (lat: number, lng: number) => {
     throw new Error('Forecast not found');
   }
   const data = await res.json();
-  // every 24 hours
-  return data.list; //.filter((_: any, i: number) => i % 8 === 0);
+  const forecastMap = new Map<string, SimpleForecast>();
+  data.list.forEach((forecast: Forecast) => {
+    const date = format(new Date(forecast.dt_txt), 'dd/MM - EE');
+    const existingForecast = forecastMap.get(date);
+    if (existingForecast) {
+      if (existingForecast.minTemperature > forecast.main.temp_min) {
+        existingForecast.minTemperature = forecast.main.temp_min;
+      }
+      if (existingForecast.maxTemperature < forecast.main.temp_max) {
+        existingForecast.maxTemperature = forecast.main.temp_max;
+      }
+      existingForecast.byTime.push({
+        time: format(new Date(forecast.dt_txt), 'HH:mm'),
+        icon: forecast.weather[0].icon,
+        temperature: forecast.main.temp,
+      });
+    } else {
+      forecastMap.set(date, {
+        city,
+        date: date,
+        minTemperature: forecast.main.temp_min,
+        maxTemperature: forecast.main.temp_max,
+        icon: forecast.weather[0].icon,
+        description: forecast.weather[0].main,
+        byTime: [
+          {
+            time: format(new Date(forecast.dt_txt), 'HH:mm'),
+            icon: forecast.weather[0].icon,
+            temperature: forecast.main.temp,
+          },
+        ],
+      });
+    }
+  });
+  return Array.from(forecastMap.values());
 };
 
 export function mapIcon(icon: string) {

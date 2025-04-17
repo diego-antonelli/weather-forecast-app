@@ -1,20 +1,22 @@
 import {Notifier} from 'react-native-notifier';
-import {colors, fonts} from '../ui-components/theme.ts';
+import {fonts} from '../ui-components/theme.ts';
 
-export function showMessage(message: string, image?: string) {
+export function showMessage(message: string) {
   Notifier.showNotification({
     description: message,
     duration: 4000,
     showAnimationDuration: 800,
     hideOnPress: false,
     componentProps: {
-      ...(image ? {imageSource: {uri: image}} : {}),
       descriptionStyle: {
         ...fonts.regularBodySmall,
-        color: colors.black,
-        textAlign: image ? 'auto' : 'center',
+        color: '#000',
+        textAlign: 'auto',
       },
-      containerStyle: {borderRadius: 10, paddingVertical: image ? 8 : 16},
+      containerStyle: {
+        borderRadius: 10,
+        paddingVertical: 16,
+      },
     },
   });
 }

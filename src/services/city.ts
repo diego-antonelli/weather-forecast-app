@@ -6,6 +6,7 @@ export type City = {
   longitude: number;
   country: string;
   population: number;
+  region: string;
   is_capital: boolean;
 };
 

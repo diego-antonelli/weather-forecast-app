@@ -4,9 +4,12 @@ import LottieView from 'lottie-react-native';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {Routes} from '../utils/constants.ts';
 import {RootStackParamList} from '../types';
+import LinearGradient from 'react-native-linear-gradient';
+import {useTheme} from '../ui-components/theme.ts';
 
 export const SplashScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const theme = useTheme();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -20,22 +23,25 @@ export const SplashScreen = () => {
   }, [navigation]);
 
   return (
-    <View style={styles.container}>
-      <LottieView
-        source={require('../assets/splash_animation.json')}
-        autoPlay
-        loop
-        style={styles.lottie}
-      />
-      <Text style={styles.title}>Weather Forecast</Text>
-    </View>
+    <LinearGradient colors={theme.gradient} style={styles.container}>
+      <View style={styles.container}>
+        <LottieView
+          source={require('../assets/splash_animation.json')}
+          autoPlay
+          loop
+          style={styles.lottie}
+        />
+        <Text style={[styles.title, {color: theme.text.primaryColor}]}>
+          Weather Forecast
+        </Text>
+      </View>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#001F3F',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -44,7 +50,6 @@ const styles = StyleSheet.create({
     height: 200,
   },
   title: {
-    color: '#fff',
     fontSize: 24,
     marginTop: 20,
     fontWeight: 'bold',

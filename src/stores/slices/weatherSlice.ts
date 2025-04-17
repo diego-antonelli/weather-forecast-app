@@ -31,21 +31,23 @@ export const getForecast = createAsyncThunk(
 
 export const getForecastByLatLng = createAsyncThunk(
   'weather/getForecastByLatLng',
-  async ({lat, lng}: {lat: number; lng: number}) => {
-    return await fetchForecastByLatLng(lat, lng);
+  async ({name, lat, lng}: {name: string; lat: number; lng: number}) => {
+    return await fetchForecastByLatLng(name, lat, lng);
   },
 );
 
 interface State {
   current?: Forecast;
   forecast: SimpleForecast[];
-  loading: boolean;
+  loadingWeather: boolean;
+  loadingForecast: boolean;
   error?: string;
 }
 
 const initialState: State = {
   forecast: [],
-  loading: false,
+  loadingWeather: false,
+  loadingForecast: false,
 };
 
 const weatherSlice = createSlice({
@@ -55,45 +57,47 @@ const weatherSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(getWeather.pending, state => {
-        state.loading = true;
+        state.loadingWeather = true;
       })
       .addCase(getWeather.fulfilled, (state, action) => {
         state.current = action.payload;
-        state.loading = false;
+        state.loadingWeather = false;
       })
       .addCase(getWeather.rejected, (state, action) => {
-        state.loading = false;
+        state.loadingWeather = false;
         state.error = action.error.message;
       })
       .addCase(getWeatherByLatLng.pending, state => {
-        state.loading = true;
+        state.loadingWeather = true;
       })
       .addCase(getWeatherByLatLng.fulfilled, (state, action) => {
         state.current = action.payload;
-        state.loading = false;
+        state.loadingWeather = false;
       })
       .addCase(getWeatherByLatLng.rejected, (state, action) => {
-        state.loading = false;
+        state.loadingWeather = false;
         state.error = action.error.message;
       })
       .addCase(getForecast.pending, state => {
-        state.loading = true;
+        state.loadingForecast = true;
       })
       .addCase(getForecast.fulfilled, (state, action) => {
         state.forecast = action.payload;
+        state.loadingForecast = false;
       })
       .addCase(getForecast.rejected, (state, action) => {
-        state.loading = false;
+        state.loadingForecast = false;
         state.error = action.error.message;
       })
       .addCase(getForecastByLatLng.pending, state => {
-        state.loading = true;
+        state.loadingForecast = true;
       })
       .addCase(getForecastByLatLng.fulfilled, (state, action) => {
         state.forecast = action.payload;
+        state.loadingForecast = false;
       })
       .addCase(getForecastByLatLng.rejected, (state, action) => {
-        state.loading = false;
+        state.loadingForecast = false;
         state.error = action.error.message;
       });
   },

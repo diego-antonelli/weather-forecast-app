@@ -37,7 +37,6 @@ function TabStack() {
   const renderTabLabel = useCallback(
     ({
       focused,
-      // color,
       children,
     }: {
       focused: boolean;
@@ -49,12 +48,12 @@ function TabStack() {
         style={StyleSheet.flatten([
           styles.tabLabel,
           focused ? styles.focusedTabLabel : undefined,
-          // {color},
+          {color: focused ? theme.buttonBackground : theme.text.primaryColor},
         ])}>
         {children}
       </Text>
     ),
-    [],
+    [theme.buttonBackground, theme.text.primaryColor],
   );
 
   const renderTabIcon = useCallback(
@@ -64,34 +63,46 @@ function TabStack() {
           case Routes.Home:
             return (
               <FeatherIcon
-                size={22}
-                color={theme.text.primaryColor}
+                size={focused ? 18 : 22}
+                color={
+                  focused ? theme.buttonBackground : theme.text.primaryColor
+                }
                 name="sun"
               />
             );
           case Routes.Forecast:
             return (
               <FeatherIcon
-                size={22}
-                color={theme.text.primaryColor}
+                size={focused ? 18 : 22}
+                color={
+                  focused ? theme.buttonBackground : theme.text.primaryColor
+                }
                 name="bar-chart-2"
               />
             );
           case Routes.Search:
             return (
               <FeatherIcon
-                size={22}
-                color={theme.text.primaryColor}
+                size={focused ? 18 : 22}
+                color={
+                  focused ? theme.buttonBackground : theme.text.primaryColor
+                }
                 name="search"
               />
             );
           default:
             return (
-              <Icon size={22} color={theme.text.primaryColor} name="question" />
+              <Icon
+                size={focused ? 18 : 22}
+                color={
+                  focused ? theme.buttonBackground : theme.text.primaryColor
+                }
+                name="question"
+              />
             );
         }
       },
-    [theme.text.primaryColor],
+    [theme.buttonBackground, theme.text.primaryColor],
   );
 
   return (

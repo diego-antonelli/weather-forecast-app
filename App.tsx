@@ -6,8 +6,6 @@ import {showMessage} from './src/utils/toast.ts';
 import {AppNavigator} from './src/navigation';
 
 function App(): React.JSX.Element {
-  // const isDarkMode = useColorScheme() === 'dark';
-
   useEffect(() => {
     const permission = Platform.select({
       ios: PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
