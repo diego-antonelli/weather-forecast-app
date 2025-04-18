@@ -90,10 +90,12 @@ const searchSlice = createSlice({
     builder
       .addCase(findCityByLatLng.pending, state => {
         state.loading = true;
+        state.error = undefined;
       })
       .addCase(findCityByLatLng.fulfilled, (state, action) => {
         state.selectedCity = action.payload;
         state.loading = false;
+        state.error = undefined;
       })
       .addCase(findCityByLatLng.rejected, (state, action) => {
         state.loading = false;

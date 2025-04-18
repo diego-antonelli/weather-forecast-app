@@ -1,5 +1,4 @@
 import {Notifier} from 'react-native-notifier';
-import {fonts} from '../ui-components/theme';
 
 export function showMessage(message: string) {
   Notifier.showNotification({

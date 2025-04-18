@@ -5,7 +5,7 @@ import {useTheme} from './theme';
 export function Error({error}: {error: string}) {
   const theme = useTheme();
   return (
-    <View style={styles.content}>
+    <View style={styles.content} testID="error-message">
       <Text animation="fadeIn" style={{color: theme.text.error}}>
         An error occurred: {error}
       </Text>

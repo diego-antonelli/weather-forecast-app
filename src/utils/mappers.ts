@@ -1,4 +1,4 @@
-import {Forecast, SimpleForecast} from '../../services/weather';
+import {Forecast, SimpleForecast} from '../services/weather';
 import {format} from 'date-fns/format';
 
 export function mapForecastsToSimpleForecasts(
@@ -70,4 +70,12 @@ export function mapIcon(icon: string) {
     default:
       return '☀️';
   }
+}
+
+export function mapCountryEmoji(country: string) {
+  const codePoints = country
+    .toUpperCase()
+    .split('')
+    .map(char => 127397 + char.charCodeAt(0));
+  return String.fromCodePoint(...codePoints);
 }

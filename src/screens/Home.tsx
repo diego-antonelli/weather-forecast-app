@@ -80,6 +80,7 @@ export const Home = () => {
       <SafeAreaView style={styles.container}>
         <Animated.ScrollView contentContainerStyle={styles.content}>
           {content}
+          {/* TODO: This card could be shown up to the user click on the current location and hide using a store to remove the attention of the user */}
           <AnimatedView
             animation="zoomIn"
             style={[styles.card, {backgroundColor: theme.backgroundColor}]}>

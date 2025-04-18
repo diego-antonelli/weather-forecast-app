@@ -16,7 +16,7 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 import {useEffect} from 'react';
-import {mapIcon} from '../utils/mappers';
+import {mapCountryEmoji, mapIcon} from '../utils/mappers';
 
 export function WeatherContent() {
   const rotation = useSharedValue(0);
@@ -43,20 +43,25 @@ export function WeatherContent() {
             name="map-pin"
             color={theme.text.primaryColor}
             size={styles.city.fontSize}
-            style={{marginRight: 8}}
+            style={styles.pin}
           />
         )}
-        <Text style={styles.city}>
-          {selectedCity?.name} ({selectedCity?.country})
+        <Text style={styles.city} testID="city-name">
+          {selectedCity?.name}{' '}
+          {selectedCity?.country
+            ? `(${mapCountryEmoji(selectedCity.country)})`
+            : ''}
         </Text>
       </View>
       <AnimatedView style={[styles.iconWrapper, animatedStyle]}>
-        <Text style={{fontSize: 90}}>
+        <Text style={styles.icon}>
           {mapIcon(weather?.weather?.[0]?.icon ?? '')}
         </Text>
       </AnimatedView>
-      <Text style={styles.temp}>{formatTemperature(weather?.main?.temp)}C</Text>
-      <Text style={styles.condition}>
+      <Text style={styles.temp} testID="temperature">
+        {formatTemperature(weather?.main?.temp)}C
+      </Text>
+      <Text style={styles.condition} testID="condition">
         {weather?.weather?.[0]?.main} - {weather?.weather?.[0]?.description}
       </Text>
 
@@ -82,6 +87,7 @@ const styles = StyleSheet.create({
   content: {flex: 1, justifyContent: 'center', alignItems: 'center'},
   cityContainer: {flexDirection: 'row', justifyContent: 'center'},
   city: {fontSize: 26, marginBottom: 8},
+  icon: {fontSize: 90},
   iconWrapper: {
     marginVertical: 12,
     width: 100,
@@ -93,4 +99,5 @@ const styles = StyleSheet.create({
   condition: {fontSize: 22},
   details: {marginTop: 20, alignItems: 'center'},
   detail: {fontSize: 16},
+  pin: {marginRight: 8},
 });

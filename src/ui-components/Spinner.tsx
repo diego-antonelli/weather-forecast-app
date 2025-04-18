@@ -11,6 +11,7 @@ export function Spinner({
   const theme = useTheme();
   return (
     <ActivityIndicator
+      testID="loading-spinner"
       size="small"
       color={color ?? theme.buttonBackground}
       style={style}

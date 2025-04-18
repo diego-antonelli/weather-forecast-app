@@ -31,10 +31,12 @@ const citySlice = createSlice({
     builder
       .addCase(getCitySuggestions.pending, state => {
         state.loading = true;
+        state.error = undefined;
       })
       .addCase(getCitySuggestions.fulfilled, (state, action) => {
         state.suggestions = action.payload;
         state.loading = false;
+        state.error = undefined;
       })
       .addCase(getCitySuggestions.rejected, (state, action) => {
         state.loading = false;

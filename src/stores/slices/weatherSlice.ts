@@ -44,6 +44,7 @@ interface State {
   loadingWeather: boolean;
   loadingForecast: boolean;
   error?: string;
+  errorForecast?: string;
 }
 
 const initialState: State = {
@@ -72,10 +73,12 @@ const weatherSlice = createSlice({
       // })
       .addCase(getWeatherByLatLng.pending, state => {
         state.loadingWeather = true;
+        state.error = undefined;
       })
       .addCase(getWeatherByLatLng.fulfilled, (state, action) => {
         state.current = action.payload;
         state.loadingWeather = false;
+        state.error = undefined;
       })
       .addCase(getWeatherByLatLng.rejected, (state, action) => {
         state.loadingWeather = false;
@@ -95,14 +98,16 @@ const weatherSlice = createSlice({
       // })
       .addCase(getForecastByLatLng.pending, state => {
         state.loadingForecast = true;
+        state.errorForecast = undefined;
       })
       .addCase(getForecastByLatLng.fulfilled, (state, action) => {
         state.forecast = action.payload;
         state.loadingForecast = false;
+        state.errorForecast = undefined;
       })
       .addCase(getForecastByLatLng.rejected, (state, action) => {
         state.loadingForecast = false;
-        state.error = action.error.message;
+        state.errorForecast = action.error.message;
       });
   },
 });

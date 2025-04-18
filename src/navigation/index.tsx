@@ -8,7 +8,6 @@ import {Text} from '../ui-components/Text';
 import React, {ReactNode, useCallback} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {StyleSheet} from 'react-native';
-import Icon from '@react-native-vector-icons/fontisto';
 import FeatherIcon from '@react-native-vector-icons/feather';
 import {SplashScreen} from '../screens/SplashScreen';
 import {Forecast} from '../screens/Forecast';
@@ -29,7 +28,11 @@ const getOptions = (props: any, theme: any) => {
     headerLeft: ({canGoBack}: any) =>
       canGoBack && (
         <ClickableContainer onPress={props.navigation.goBack}>
-          <Icon name="arrow-left" color={theme.text.primaryColor} size={24} />
+          <FeatherIcon
+            name="arrow-left"
+            color={theme.text.primaryColor}
+            size={24}
+          />
         </ClickableContainer>
       ),
   };
@@ -95,12 +98,12 @@ function TabStack() {
             );
           default:
             return (
-              <Icon
+              <FeatherIcon
                 size={focused ? 18 : 22}
                 color={
                   focused ? theme.buttonBackground : theme.text.primaryColor
                 }
-                name="question"
+                name="user-x"
               />
             );
         }

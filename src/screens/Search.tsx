@@ -18,6 +18,8 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../types';
 import {Routes} from '../utils/constants';
 import {Spinner} from '../ui-components/Spinner';
+import {Error} from '../ui-components/Error';
+import {mapCountryEmoji} from '../utils/mappers.ts';
 
 const SearchScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -25,7 +27,8 @@ const SearchScreen = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const searches = useAppSelector(state => state.search.searches);
-  const loading = useAppSelector(state => state.search.loading);
+  const loading = useAppSelector(state => state.city.loading);
+  const error = useAppSelector(state => state.city.error);
   const cities = useAppSelector(state => state.city.suggestions);
 
   //eslint-disable-next-line react-hooks/exhaustive-deps
@@ -59,32 +62,36 @@ const SearchScreen = () => {
           setQuery('');
         }}
       />
-      <FlatList
-        ListHeaderComponent={loading ? <Spinner /> : null}
-        data={cities.length > 0 ? cities : searches}
-        renderItem={({item}) => (
-          <AnimatedView animation="fadeInUp">
-            <ClickableContainer
-              style={[
-                styles.item,
-                {backgroundColor: theme.secondaryBackgroundColor},
-              ]}
-              onPress={() => {
-                dispatch(selectCity(item));
-                dispatch(addSearch(item));
-                dispatch(setCurrentLocation(false));
-                navigation.navigate(Routes.Home);
-              }}>
-              <Text style={styles.city}>
-                {item.name} ({item.country})
-              </Text>
-            </ClickableContainer>
-          </AnimatedView>
-        )}
-        keyExtractor={item =>
-          `${item.longitude}_${item.latitude}_${item.country}`
-        }
-      />
+      {error ? (
+        <Error error={error} />
+      ) : (
+        <FlatList
+          ListHeaderComponent={loading ? <Spinner /> : null}
+          data={cities.length > 0 ? cities : searches}
+          renderItem={({item}) => (
+            <AnimatedView animation="fadeInUp">
+              <ClickableContainer
+                style={[
+                  styles.item,
+                  {backgroundColor: theme.secondaryBackgroundColor},
+                ]}
+                onPress={() => {
+                  dispatch(selectCity(item));
+                  dispatch(addSearch(item));
+                  dispatch(setCurrentLocation(false));
+                  navigation.navigate(Routes.Home);
+                }}>
+                <Text style={styles.city}>
+                  {item.name} ({mapCountryEmoji(item.country)})
+                </Text>
+              </ClickableContainer>
+            </AnimatedView>
+          )}
+          keyExtractor={item =>
+            `${item.longitude}_${item.latitude}_${item.country}`
+          }
+        />
+      )}
     </SafeAreaView>
   );
 };
