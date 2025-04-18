@@ -62,10 +62,10 @@ describe('Forecast Component', () => {
     mockUseSelector.mockReturnValueOnce('Failed to fetch forecast'); //Error
     mockUseSelector.mockReturnValueOnce(undefined); //Selected City
 
-    render(<Forecast />);
+    const {getByTestId} = render(<Forecast />);
 
     //@ts-expect-error mocked AnimatedText causes the element to contain a text outside a Text component
-    expect(screen.getByTestId('error-message').children[0].children[1]).toBe(
+    expect(getByTestId('error-message').children[1].children[1]).toBe(
       'Failed to fetch forecast',
     );
   });
