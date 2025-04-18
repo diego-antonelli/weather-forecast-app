@@ -50,7 +50,6 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Feather.ttf</string>
-		<string>Fontisto.ttf</string>
 	</array>
 </dict>
 </plist>

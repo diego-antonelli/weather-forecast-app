@@ -12,17 +12,6 @@ jest.mock('../theme', () => ({
   useTheme: jest.fn(),
 }));
 
-jest.mock('react-native-animatable', () => ({
-  View: jest.fn(({children}) => children),
-}));
-
-jest.mock('react-native-reanimated', () => ({
-  useSharedValue: jest.fn(() => ({value: 0})),
-  useAnimatedStyle: jest.fn(() => ({})),
-  withRepeat: jest.fn(),
-  withTiming: jest.fn(),
-}));
-
 jest.mock('@react-native-vector-icons/feather', () => {
   return {
     __esModule: true,
@@ -55,9 +44,10 @@ describe('WeatherContent Component', () => {
       }),
     );
 
-    const {getByText} = render(<WeatherContent />);
+    const {getByText, getByTestId} = render(<WeatherContent />);
 
-    expect(getByText('New York (USA)')).toBeTruthy();
+    expect(getByTestId('city-name')).toBeTruthy();
+    expect(getByTestId('city-name').children[0]).toBe('New York');
     expect(getByText('25°C')).toBeTruthy();
     expect(getByText('Clear - clear sky')).toBeTruthy();
   });
@@ -78,9 +68,10 @@ describe('WeatherContent Component', () => {
       }),
     );
 
-    const {getByText} = render(<WeatherContent />);
+    const {getByText, getByTestId} = render(<WeatherContent />);
 
-    expect(getByText('Paris (France)')).toBeTruthy();
+    expect(getByTestId('city-name')).toBeTruthy();
+    expect(getByTestId('city-name').children[0]).toBe('Paris');
     expect(getByText('Cloudy - overcast clouds')).toBeTruthy();
   });
 
@@ -103,7 +94,8 @@ describe('WeatherContent Component', () => {
 
     const {getByText, getByTestId} = render(<WeatherContent />);
 
-    expect(getByText('Tokyo (Japan)')).toBeTruthy();
+    expect(getByTestId('city-name')).toBeTruthy();
+    expect(getByTestId('city-name').children[0]).toBe('Tokyo');
     expect(getByText('30°C')).toBeTruthy();
     expect(getByText('Rain - light rain')).toBeTruthy();
     expect(getByTestId('feels-like')).toBeTruthy();

@@ -1578,13 +1578,6 @@
   dependencies:
     "@react-native-vector-icons/common" "^11.0.0"
 
-"@react-native-vector-icons/fontisto@^3.0.4":
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/@react-native-vector-icons/fontisto/-/fontisto-3.0.4.tgz#8ffde1d92fe334a0c8f93804317c23c7b7cffd5f"
-  integrity sha512-d54fLu6cl7MxQXcP0EDWufGeeGkijnpO/fZaiilphlwP/TPlV7BuFox4anhyfe8pxlEuGBqG56QniYmqZRhbyw==
-  dependencies:
-    "@react-native-vector-icons/common" "^11.0.0"
-
 "@react-native/assets-registry@0.79.1":
   version "0.79.1"
   resolved "https://registry.yarnpkg.com/@react-native/assets-registry/-/assets-registry-0.79.1.tgz#39ce0a710a03d98c276cfa2877a925f1677614bd"
