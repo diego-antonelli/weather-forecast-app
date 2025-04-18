@@ -63,7 +63,7 @@ jest.mock('@react-navigation/bottom-tabs', () => {
 jest.mock('@react-navigation/native', () => {
   return {
     __esModule: true,
-    useNavigation: jest.fn(),
+    useNavigation: jest.fn().mockReturnValue({navigate: jest.fn()}),
     useRoute: jest.fn(),
     NavigationContainer: jest.fn(({children}) => children),
   };

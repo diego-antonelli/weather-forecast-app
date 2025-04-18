@@ -51,6 +51,7 @@ const SearchScreen = () => {
     <SafeAreaView
       style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
       <TextBox
+        role="searchbox"
         label="Search for a city..."
         containerStyle={styles.input}
         value={query}
@@ -68,7 +69,7 @@ const SearchScreen = () => {
         <FlatList
           ListHeaderComponent={loading ? <Spinner /> : null}
           data={cities.length > 0 ? cities : searches}
-          renderItem={({item}) => (
+          renderItem={({item, index}) => (
             <AnimatedView animation="fadeInUp">
               <ClickableContainer
                 style={[
@@ -81,7 +82,7 @@ const SearchScreen = () => {
                   dispatch(setCurrentLocation(false));
                   navigation.navigate(Routes.Home);
                 }}>
-                <Text style={styles.city}>
+                <Text style={styles.city} testID={`search-city-${index}`}>
                   {item.name} ({mapCountryEmoji(item.country)})
                 </Text>
               </ClickableContainer>

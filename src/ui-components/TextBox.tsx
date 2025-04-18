@@ -1,5 +1,6 @@
 import {
   Platform,
+  Role,
   StyleProp,
   StyleSheet,
   TextInput,
@@ -20,6 +21,7 @@ interface TextBoxProps {
   returnKeyType?: 'done' | 'go' | 'next' | 'search' | 'send';
   onSubmitEditing?: () => void;
   onClean?: () => void;
+  role?: Role;
 }
 export const TextBox = ({
   label,
@@ -30,6 +32,7 @@ export const TextBox = ({
   returnKeyType,
   onSubmitEditing,
   onClean,
+  role,
 }: TextBoxProps) => {
   const theme = useTheme();
   return (
@@ -62,6 +65,7 @@ export const TextBox = ({
           returnKeyType === 'go' ||
           returnKeyType === 'send'
         }
+        role={role}
       />
       {onClean && value && (
         <ClickableContainer onPress={onClean}>
